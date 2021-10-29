@@ -29,7 +29,7 @@ let questions = [
   new Question(
     "Quel objet Javascript permet d'arrondir à l'entier le plus proche",
     ["Math.ceil()", "Math.floor()", "Math.round()", "Math.random()"],
-    "Math.random()"
+    "Math.floor()"
   ),
 ];
 
@@ -75,16 +75,18 @@ const display = {
     let choices = quiz.getCurrentQuestion().choices;
 
     guessHandler = (id, guess) => {
-      document.getElementById(id).onclik = function () {
+      document.getElementById(id).onclick = function () {
         quiz.guess(guess);
         quizApp();
       };
     };
     for (let i = 0; i < choices.length; i++) {
       this.elementShown("choice" + i, choices[i]);
+      guessHandler("guess" + i, choices[i]);
     }
   },
 };
+
 // game logic
 
 quizApp = () => {
