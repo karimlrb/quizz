@@ -4,12 +4,11 @@ class Question {
     this.choices = choices;
     this.answer = answer;
   }
-  //Si le choix du user est = à this.answer on renvoie true, c'est un booléen
+  //   Si le choix du user est = à this.answer on renvoi true, c'est un booléen
   isCorrectAnswer(choice) {
     return this.answer === choice;
   }
 }
-
 let questions = [
   new Question(
     "Quelle méthode Javascript permet de filtrer les éléments d'un tableau",
@@ -18,20 +17,22 @@ let questions = [
   ),
   new Question(
     "Quelle méthode Javascript permet de vérifier si un élément figure dans un tableau",
-    ["isNaN()", "includes()", "findIndex()", "isOdd()", "includes()"],
+    ["isNaN()", "includes()", "findIndex()", "isOdd()"],
     "includes()"
   ),
   new Question(
-    "Quelle méthode transforme du JSON en un objet Javascript",
-    ["JSON.parse()", "JSON.stringify()", "JSON.object()", "JSON.toJS()"],
+    "Quelle méthode transforme du JSON en un objet Javascript ?",
+    ["JSON.parse()", "JSON.stringify()", "JSON.object()", "JSON.toJS"],
     "JSON.parse()"
   ),
   new Question(
     "Quel objet Javascript permet d'arrondir à l'entier le plus proche",
     ["Math.ceil()", "Math.floor()", "Math.round()", "Math.random()"],
-    "Math.floor()"
+    "Math.round()"
   ),
 ];
+
+console.log(questions);
 
 class Quiz {
   constructor(questions) {
@@ -53,11 +54,9 @@ class Quiz {
   }
 }
 
-// regroup all functions relative to the app display
-
+// Regroup all  functions relative to the App Display
 const display = {
-  // ici déclarer la fonction -> fonction elementShown(id, text) {} ne marche pas, utiliser la syntaxe ci-dessous
-
+  // Ici déclarer la fonction -> function elementShow(id, text){} ne marche pas, utiliser la sybtaxe ci-dessous
   elementShown: function (id, text) {
     let element = document.getElementById(id);
     element.innerHTML = text;
@@ -80,28 +79,33 @@ const display = {
         quizApp();
       };
     };
+    // display choices and handle guess
     for (let i = 0; i < choices.length; i++) {
       this.elementShown("choice" + i, choices[i]);
       guessHandler("guess" + i, choices[i]);
     }
   },
+  progress: function () {
+    let currentQuestionNumber = quiz.currentQuestionIndex + 1;
+    this.elementShown(
+      "progress",
+      "Question " + currentQuestionNumber + " sur " + quiz.questions.length
+    );
+  },
 };
 
-// game logic
-
+// Game logic
 quizApp = () => {
-  // on test si quiz.hasEnded() === true
+  // On test si quiz.hasEnded() === true
   if (quiz.hasEnded()) {
     display.endQuiz();
   } else {
     display.question();
     display.choices();
-    // progress
+    display.progress();
   }
 };
-
-// create quiz
-
+// Create Quiz
 let quiz = new Quiz(questions);
 quizApp();
 
